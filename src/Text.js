@@ -1,11 +1,11 @@
 import styled from "styled-components";
+import {typography} from "styled-system"
 
 export const Text = styled.span`
   min-width: 0;
   min-height: 0;
   flex: none;
-  font-size: ${({ theme, fontSize }) =>
-    typeof fontSize === "number" ? `${theme.fontSizes[fontSize]}px` : fontSize};
+  ${typography}
 `;
 
 Text.defaultProps = {

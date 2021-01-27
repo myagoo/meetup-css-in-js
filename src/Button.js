@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {color} from "styled-system"
 
 export const Button = styled.button`
   min-height: 0;
@@ -8,9 +9,7 @@ export const Button = styled.button`
   border: none;
   font-size: inherit;
 
-  background-color: ${({ backgroundColor, theme }) =>
-    theme.colors[backgroundColor] || backgroundColor};
-  color: ${({ color, theme }) => theme.colors[color] || color};
+  ${color}
 
   padding: ${({ theme }) => theme.space[3]}px ${({ theme }) => theme.space[4]}px;
 
