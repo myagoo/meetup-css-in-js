@@ -8,8 +8,9 @@ export const Button = styled.button`
   border: none;
   font-size: inherit;
 
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.primaryText};
+  background-color: ${({ backgroundColor, theme }) =>
+    theme.colors[backgroundColor] || backgroundColor};
+  color: ${({ color, theme }) => theme.colors[color] || color};
 
   padding: ${({ theme }) => theme.space[3]}px ${({ theme }) => theme.space[4]}px;
 
@@ -21,3 +22,8 @@ export const Button = styled.button`
     opacity: 0.5;
   }
 `;
+
+Button.defaultProps = {
+  backgroundColor: "primary",
+  color: "primaryText",
+};

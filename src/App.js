@@ -29,22 +29,6 @@ const Header = styled(View)`
   padding: ${({ theme }) => theme.space[3]}px;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.primaryText};
-  gap: ${({ theme }) => theme.space[3]}px;
-`;
-
-const Title = styled(Text)`
-  font-size: ${({ theme }) => theme.fontSizes[7]}px;
-`;
-
-const FormContainer = styled(View)`
-  flex-direction: row;
-  justify-content: center;
-  gap: ${({ theme }) => theme.space[3]}px;
-`;
-
-const AddButton = styled(Button)`
-  background-color: ${({ theme }) => theme.colors.accent};
-  color: ${({ theme }) => theme.colors.accentText};
 `;
 
 const TodosContainer = styled(View)`
@@ -55,11 +39,7 @@ const TodosContainer = styled(View)`
 
 const Todo = styled(View)`
   animation: 250ms ${fadeIn} linear both;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   padding: ${({ theme }) => theme.space[3]}px;
-  gap: ${({ theme }) => theme.space[3]}px;
 `;
 
 const CompleteToggle = styled(Button)`
@@ -97,28 +77,30 @@ export const App = () => {
     <>
       <GlobalStyles />
       <View>
-        <Header>
-          <Title>CSS-in-JS Meetup Todolist</Title>
-          <FormContainer>
+        <Header gap={3}>
+          <Text fontSize={7}>CSS-in-JS Meetup Todolist</Text>
+          <View flexDirection="row" alignItems="center" gap={3}>
             <Input
               autoFocus
               placeholder="Do something great"
               value={pendingTodo}
               onChange={handlePendingTodoChange}
             />
-            <AddButton
+            <Button
+              backgroundColor="accent"
+              color="accentText"
               disabled={pendingTodo.trim().length === 0}
               onClick={handlePendingTodoAdd}
             >
               Add todo
-            </AddButton>
-          </FormContainer>
+            </Button>
+          </View>
         </Header>
 
         <TodosContainer>
           {todos.map((todo) => {
             return (
-              <Todo key={todo.id}>
+              <Todo key={todo.id} flexDirection="row" alignItems="center" justifyContent="space-between" gap={3}>
                 <CompleteToggle
                   completed={todo.completed}
                   onClick={() => handleTodoCompleteToggle(todo)}
