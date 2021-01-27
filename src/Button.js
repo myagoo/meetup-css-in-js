@@ -1,21 +1,8 @@
 import styled from "styled-components";
-import {color} from "styled-system"
+import { primitives } from "./primitives";
 
 export const Button = styled.button`
-  min-height: 0;
-  min-width: 0;
-  flex: none;
-
-  border: none;
-  font-size: inherit;
-
-  ${color}
-
-  padding: ${({ theme }) => theme.space[3]}px ${({ theme }) => theme.space[4]}px;
-
-  cursor: pointer;
-  text-transform: uppercase;
-
+  ${primitives}
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
@@ -23,6 +10,15 @@ export const Button = styled.button`
 `;
 
 Button.defaultProps = {
+  minHeight:0,
+  minWidth: 0,
+  flex: "none",
+  py: 3,
+  px: 4,
+  border: "none",
+  fontSize: "inherit",
+  cursor: "pointer",
+  textTransform: "uppercase",
   backgroundColor: "primary",
   color: "primaryText",
 };

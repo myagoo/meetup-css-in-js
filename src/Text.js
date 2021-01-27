@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import {typography} from "styled-system"
+import { primitives } from "./primitives";
 
 export const Text = styled.span`
-  min-width: 0;
-  min-height: 0;
-  flex: none;
-  ${typography}
+  ${primitives}
 `;
 
 Text.defaultProps = {
+  minHeight: 0,
+  minWidth: 0,
+  flex: "none",
   fontSize: "inherit",
 };

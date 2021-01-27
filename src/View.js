@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import {flexbox} from "styled-system"
+import { primitives } from "./primitives";
 
 export const View = styled.div`
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  ${flexbox}
-  gap: ${({ theme, gap }) => typeof gap === "number" ? `${theme.space[gap]}px` : gap};
+  ${primitives}
 `;
 
 View.defaultProps = {
+  minHeight: 0,
+  minWidth: 0,
+  display: "flex",
   flexDirection: "column",
   alignItems: "stretch",
   justifyContent: "flex-start",

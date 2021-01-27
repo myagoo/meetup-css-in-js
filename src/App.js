@@ -24,42 +24,19 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const Header = styled(View)`
-  align-items: center;
-  padding: ${({ theme }) => theme.space[3]}px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.primaryText};
-`;
-
 const TodosContainer = styled(View)`
   & > * + * {
     border-top: 1px solid ${({ theme }) => theme.colors.divider};
   }
 `;
 
-const Todo = styled(View)`
-  animation: 250ms ${fadeIn} linear both;
-  padding: ${({ theme }) => theme.space[3]}px;
-`;
-
 const CompleteToggle = styled(Button)`
   ${({ theme, completed }) =>
     !completed &&
     css`
-      color: transparent;
       &:hover {
         color: ${theme.colors.lightPrimary};
       }
-    `}
-`;
-
-const TodoLabel = styled(Text)`
-  flex: 1;
-  ${({ theme, completed }) =>
-    completed &&
-    css`
-      color: ${theme.colors.secondaryBackgroundText};
-      text-decoration: line-through;
     `}
 `;
 
@@ -77,7 +54,7 @@ export const App = () => {
     <>
       <GlobalStyles />
       <View>
-        <Header gap={3}>
+        <View alignItems="center" p={3} bg="primary" color="primaryText" gap={3}>
           <Text fontSize={7}>CSS-in-JS Meetup Todolist</Text>
           <View flexDirection="row" alignItems="center" gap={3}>
             <Input
@@ -95,21 +72,36 @@ export const App = () => {
               Add todo
             </Button>
           </View>
-        </Header>
+        </View>
 
         <TodosContainer>
           {todos.map((todo) => {
             return (
-              <Todo key={todo.id} flexDirection="row" alignItems="center" justifyContent="space-between" gap={3}>
+              <View
+                key={todo.id}
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="space-between"
+                gap={3}
+                p={3}
+                animation={css`250ms ${fadeIn} linear both`}
+              >
                 <CompleteToggle
+                  color={!todo.completed ? "transparent" : undefined}
                   completed={todo.completed}
                   onClick={() => handleTodoCompleteToggle(todo)}
                 >
                   ✓
                 </CompleteToggle>
-                <TodoLabel completed={todo.completed}>{todo.text}</TodoLabel>
+                <Text
+                  flex="1"
+                  color={todo.completed ? "secondaryBackgroundText" : undefined}
+                  textDecoration={todo.completed ? "line-through" : undefined}
+                >
+                  {todo.text}
+                </Text>
                 <Button onClick={() => handleTodoRemove(todo)}>&times;</Button>
-              </Todo>
+              </View>
             );
           })}
         </TodosContainer>
