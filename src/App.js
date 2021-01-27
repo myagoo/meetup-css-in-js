@@ -54,9 +54,9 @@ export const App = () => {
     <>
       <GlobalStyles />
       <View>
-        <View alignItems="center" p={3} bg="primary" color="primaryText" gap={3}>
-          <Text fontSize={7}>CSS-in-JS Meetup Todolist</Text>
-          <View flexDirection="row" alignItems="center" gap={3}>
+        <View alignItems={["stretch", "center"]} p={[2, 3]} bg="primary" color="primaryText" gap={[2, 3]}>
+          <Text fontSize={[5, 6, 7, 8]}>CSS-in-JS Meetup Todolist</Text>
+          <View flexDirection={["column", "row"]} alignItems="center" gap={[2, 3]}>
             <Input
               autoFocus
               placeholder="Do something great"
@@ -82,8 +82,8 @@ export const App = () => {
                 flexDirection="row"
                 alignItems="center"
                 justifyContent="space-between"
-                gap={3}
-                p={3}
+                gap={[2, 3]}
+                p={[2, 3]}
                 animation={css`250ms ${fadeIn} linear both`}
               >
                 <CompleteToggle

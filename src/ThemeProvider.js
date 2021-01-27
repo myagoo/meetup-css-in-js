@@ -4,11 +4,7 @@ import { Button } from "./Button";
 import { View } from "./View";
 
 const lightTheme = {
-  breakpoints: {
-    s: "40em",
-    m: "52em",
-    l: "64em",
-  },
+  breakpoints: ["40em", "52em", "64em"],
   colors: {
     primary: "#673AB7",
     primaryText: "#ffffffe0",

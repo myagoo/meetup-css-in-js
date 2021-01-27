@@ -12,8 +12,8 @@ export const Input = styled.input`
 Input.defaultProps = {
   minHeight: 0,
   minWidth: 0,
-  py: 3,
-  px: 4,
+  py: [2, 3],
+  px: [3, 4],
   flex: "none",
   border: "none",
   fontSize: "inherit",
