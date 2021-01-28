@@ -1,27 +1,26 @@
-import styled from "styled-components";
-import { primitives } from "./primitives";
+import {createPrimitive} from "css-system"
 
-export const Button = styled.button.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    !primitives.propNames.includes(prop) && defaultValidatorFn(prop),
-})`
-  ${primitives}
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+export const Button = createPrimitive("button", ({css = {}, ...props}) => {
+  return {
+    css: {
+      py: {_: 2, m: 3},
+      px: {_: 3, m: 4},
+      bg: "primary",
+      border: "none",
+      color: "primaryText",
+      minWidth: 0,
+      minHeight: 0,
+      flex: "none",
+      fontSize: "inherit",
+      cursor: "pointer",
+      textTransform: "uppercase",
+      ...css,
+      "&:disabled": {
+        cursor: "not-allowed",
+        opacity: 0.5,
+        ...css["&:disabled"],
+      },
+    },
+    ...props,
   }
-`;
-
-Button.defaultProps = {
-  minHeight: 0,
-  minWidth: 0,
-  flex: "none",
-  py: [2, 3],
-  px: [3, 4],
-  border: "none",
-  fontSize: "inherit",
-  cursor: "pointer",
-  textTransform: "uppercase",
-  backgroundColor: "primary",
-  color: "primaryText",
-};
+})

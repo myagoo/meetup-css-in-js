@@ -1,44 +1,9 @@
-import styled, { createGlobalStyle, css, keyframes } from "styled-components";
+import { useGlobalCss, useKeyframes } from "css-system";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { Text } from "./Text";
 import { useTodos } from "./useTodos";
 import { View } from "./View";
-
-const fadeIn = keyframes`
-    from {opacity: 0;}
-    to {opacity: 1;}
-`;
-
-const GlobalStyles = createGlobalStyle`
-  body{
-    margin: 0;
-    font-size:  ${({ theme }) => theme.fontSizes[3]}px;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.backgroundText};
-  }
-  *, *:before, *:after{
-    box-sizing: border-box;
-    transition: all 250ms ease-out;
-  }
-`;
-
-const TodosContainer = styled(View)`
-  & > * + * {
-    border-top: 1px solid ${({ theme }) => theme.colors.divider};
-  }
-`;
-
-const CompleteToggle = styled(Button)`
-  ${({ theme, completed }) =>
-    !completed &&
-    css`
-      &:hover {
-        color: ${theme.colors.lightPrimary};
-      }
-    `}
-`;
 
 export const App = () => {
   const {
@@ -50,13 +15,47 @@ export const App = () => {
     handleTodoCompleteToggle,
   } = useTodos();
 
+  const fadeIn = useKeyframes({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  });
+
+  useGlobalCss({
+    body: {
+      m: 0,
+      fontSize: { _: 2, m: 3 },
+      fontFamily: "Arial",
+      bg: "background",
+      color: "backgroundText",
+    },
+    "*, *:before, *:after": {
+      boxSizing: "border-box",
+      transition: 'all 250ms ease-out'
+    },
+  });
+
   return (
     <>
-      <GlobalStyles />
       <View>
-        <View alignItems={["stretch", "center"]} p={[2, 3]} bg="primary" color="primaryText" gap={[2, 3]}>
-          <Text fontSize={[5, 6, 7, 8]}>CSS-in-JS Meetup Todolist</Text>
-          <View flexDirection={["column", "row"]} alignItems="center" gap={[2, 3]}>
+        <View
+          css={{
+            bg: "primary",
+            color: "primaryText",
+            alignItems: { _: "stretch", s: "center" },
+            p: { _: 2, m: 3 },
+            gap: { _: 2, m: 3 },
+          }}
+        >
+          <Text css={{ fontSize: { _: 5, s: 6, m: 7, l: 8 } }}>
+            CSS-in-JS Meetup Todolist
+          </Text>
+          <View
+            css={{
+              flexDirection: { _: "column", s: "row" },
+              justifyContent: "center",
+              gap: { _: 2, m: 3 },
+            }}
+          >
             <Input
               autoFocus
               placeholder="Do something great"
@@ -64,8 +63,7 @@ export const App = () => {
               onChange={handlePendingTodoChange}
             />
             <Button
-              backgroundColor="accent"
-              color="accentText"
+              css={{ bg: "accent", color: "accentText" }}
               disabled={pendingTodo.trim().length === 0}
               onClick={handlePendingTodoAdd}
             >
@@ -74,29 +72,50 @@ export const App = () => {
           </View>
         </View>
 
-        <TodosContainer>
+        <View
+          css={{
+            "& >  * + *": {
+              borderTop: "1px solid",
+              borderTopColor: "divider",
+            },
+          }}
+        >
           {todos.map((todo) => {
             return (
               <View
                 key={todo.id}
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="space-between"
-                gap={[2, 3]}
-                p={[2, 3]}
-                animation={css`250ms ${fadeIn} linear both`}
+                css={{
+                  animation: `250ms ${fadeIn} linear both`,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: { _: 2, m: 3 },
+                  p: { _: 2, m: 3 },
+                }}
               >
-                <CompleteToggle
-                  color={!todo.completed ? "transparent" : undefined}
-                  completed={todo.completed}
+                <Button
                   onClick={() => handleTodoCompleteToggle(todo)}
+                  css={
+                    !todo.completed
+                      ? {
+                          color: "transparent",
+                          "&:hover": {
+                            color: "lightPrimary",
+                          },
+                        }
+                      : undefined
+                  }
+                  deps={[todo.completed]}
                 >
                   ✓
-                </CompleteToggle>
+                </Button>
                 <Text
-                  flex="1"
-                  color={todo.completed ? "secondaryBackgroundText" : undefined}
-                  textDecoration={todo.completed ? "line-through" : undefined}
+                  css={{
+                    flex: "1",
+                    color: todo.completed && "secondaryBackgroundText",
+                    textDecoration: todo.completed ? "line-through" : "none",
+                  }}
+                  deps={[todo.completed]}
                 >
                   {todo.text}
                 </Text>
@@ -104,7 +123,7 @@ export const App = () => {
               </View>
             );
           })}
-        </TodosContainer>
+        </View>
       </View>
     </>
   );

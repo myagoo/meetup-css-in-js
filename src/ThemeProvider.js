@@ -1,10 +1,14 @@
+import { ThemeContext } from "css-system";
 import React, { useState } from "react";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { Button } from "./Button";
 import { View } from "./View";
 
 const lightTheme = {
-  breakpoints: ["40em", "52em", "64em"],
+  breakpoints: {
+    s: "40em",
+    m: "52em",
+    l: "64em",
+  },
   colors: {
     primary: "#673AB7",
     primaryText: "#ffffffe0",
@@ -47,7 +51,7 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(lightTheme);
 
   return (
-    <StyledThemeProvider theme={theme}>
+    <ThemeContext.Provider value={theme}>
       <View>
         {children}
         <Button
@@ -58,6 +62,6 @@ export const ThemeProvider = ({ children }) => {
           Toggle dark theme !
         </Button>
       </View>
-    </StyledThemeProvider>
+    </ThemeContext.Provider>
   );
 };

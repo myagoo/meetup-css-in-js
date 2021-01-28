@@ -1,16 +1,9 @@
-import styled from "styled-components";
-import { primitives } from "./primitives";
+import {createPrimitive} from "css-system"
 
-export const Text = styled.span.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    !primitives.propNames.includes(prop) && defaultValidatorFn(prop),
-})`
-  ${primitives}
-`;
-
-Text.defaultProps = {
-  minHeight: 0,
-  minWidth: 0,
-  flex: "none",
-  fontSize: "inherit",
-};
+export const Text = createPrimitive("span", {
+  css: {
+    minHeight: 0,
+    minWidth: 0,
+    flex: "none",
+  },
+})
