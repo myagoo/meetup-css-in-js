@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { primitives } from "./primitives";
 
-export const Input = styled.input`
+export const Input = styled.input.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    !primitives.propNames.includes(prop) && defaultValidatorFn(prop),
+})`
   ${primitives}
   &:disabled {
     cursor: not-allowed;

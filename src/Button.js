@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { primitives } from "./primitives";
 
-export const Button = styled.button`
+export const Button = styled.button.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    !primitives.propNames.includes(prop) && defaultValidatorFn(prop),
+})`
   ${primitives}
   &:disabled {
     cursor: not-allowed;
@@ -10,7 +13,7 @@ export const Button = styled.button`
 `;
 
 Button.defaultProps = {
-  minHeight:0,
+  minHeight: 0,
   minWidth: 0,
   flex: "none",
   py: [2, 3],

@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { primitives } from "./primitives";
 
-export const View = styled.div`
+export const View = styled.div.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    !primitives.propNames.includes(prop) && defaultValidatorFn(prop),
+})`
   ${primitives}
 `;
 
